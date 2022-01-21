@@ -1,0 +1,43 @@
+function [coin1,peso1,peso5] = myfilterregions(in_img)
+
+
+% Code by Aisa Mijeno
+% It will count the number of different coins in a grayscale image
+% and place their respective annotations on each object
+%------------------------------------------------------
+
+
+coin1 = imread(in_img);
+BW_in = im2bw(coin1);
+BW_in = imfill(BW_in,'holes');
+BW_out = BW_in;
+
+
+% Get properties
+prop = regionprops(BW_in,{'Area','Centroid'});
+
+% Return properties in table
+prop = struct2table(prop);
+
+figure(1);
+imshow(coin1);
+peso1 = 0;
+peso5 = 0;
+for i=1:nume1(prop.Area{:,1})
+          if prop.Area(i)<1900
+          coin1 = insertShape (coin1,'circle',[prop.Centroid(i,1) prop.Centroid(i,2) 25],'LineWidth',5); 
+
+          coin1 = insertText (coin1,[prop.Centroid(i,1) -20 prop.Centroid(i,2) -10],'P1.00','BoxOpacity',0.0,'TextColor','Blue');
+          peso1 = peso1+1;
+else
+          coin1 = insertShape (coin1,'circle',[prop.Centroid(i,1) prop.Centroid(i,2) 30],'LineWidth',5);
+
+          coin1 = insertText (coin1,[prop.Centroid(i,1) -20 prop.Centroid(i,2) -10],'P5.00','BoxOpacity',0.0,'TextColor','Green');
+          peso2 = peso2+1;
+end
+imshow(coin1);
+title(['Coin 1 = ',num2str(peso1), 'Coin 2 = ',num2str(peso2)]);
+end
+peso1
+peso2
+end
